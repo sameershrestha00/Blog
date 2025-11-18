@@ -3,6 +3,8 @@ import { useState } from 'react'
 import Navbar from './navbar';
 import Home from './home';
 import Create from './Create';
+import BlogDetails from './BlogDetails';
+import NotFound from './NotFound';
 function App() {
   return (
     <Router>
@@ -12,6 +14,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home/>} />
           <Route path="/create" element={<Create/>} />
+          <Route path="/blogs/:id" element={<BlogDetails/>}/>
+          <Route path="/*" element={<NotFound/>}/>
         </Routes>
       </div>
     </div>
