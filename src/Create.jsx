@@ -10,7 +10,7 @@ const Create = () => {
         e.preventDefault();
         const blog = {title, body, author};
         setisPending(true);
-        fetch('http://localhost:8000/blogs/',{
+        fetch('http://localhost:5000/blogs/',{
             method: 'POST',
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(blog)

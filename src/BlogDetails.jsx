@@ -1,34 +1,37 @@
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import useFetch from "./useFetch";
+import React from "react";
+import {useParams } from 'react-router-dom';
+import useFetch from './useFetch';
+import {useNavigate} from 'react-router-dom';
+
 const BlogDetails = () => {
-    const navigate = useNavigate();
-    const handleClick = () =>{
-        fetch("http://localhost:8000/blogs/"+ blog.id,{
-            method: "DELETE"
+    const{ id }=useParams();
+    const{data:blog,isPending}=useFetch('http://localhost:5000/blogs/'+id);
+    const navigate=useNavigate();
+    
+    const handleClick=()=>{
+        fetch('http://localhost:5000/blogs/'+ blog.id,{
+            method:'DELETE'
+        }).then(()=>{
+            navigate('/');
         })
-        .then(()=>{
-            console.log("Blog Deleted");
-            navigate("/");
-        }
-        )
-    }
-    const {id} = useParams();
-    const {data: blog, error, isPending} = useFetch("http://localhost:8000/blogs/"+id);
-    return ( 
-        <div className="blog-details">
-            {isPending&& <div>Loading....</div>}
-            {error&& <div>{error}</div>}
-            {blog&&(
+    };
+
+  return (
+    <div className="blog-details">
+        {isPending && <div> Loading...</div>}
+        {
+            blog &&(
                 <article>
                     <h2>{blog.title}</h2>
-                    <p>Written By: {blog.author}</p>
+                    <p>Written by {blog.author}</p>
                     <div>{blog.body}</div>
-                    <button onClick={handleClick}>Delete</button>
+                    <button onClick={handleClick}>Delete Blog</button>
+                    <button onClick={() => navigate(`/edit/${blog.id}`)}>Edit Blog</button>
                 </article>
-            )}
-        </div>
-     );
-}
- 
+            )
+        }
+
+    </div>
+  );
+};
 export default BlogDetails;
